@@ -417,10 +417,10 @@ const save=()=>{
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const num=v=>Number(v)||0, f2=n=>num(n).toFixed(2);
 function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),1800)}
-function ev(g,j){const k=g+":"+j;return S.evals[k]||(S.evals[k]={scores:{},people:20,secs:0,safety:false,attire:false,comments:"",submitted:false})}
+function ev(g,j){const k=g+":"+j;return S.evals[k]||(S.evals[k]={scores:{},people:15,secs:0,safety:false,attire:false,comments:"",submitted:false})}
 function calc(e,g){
   const sub=CRITERIA.reduce((n,c)=>n+Math.min(c.m,Math.max(0,num(e.scores[c.k]))),0);
-  const pp=(e.people<20||e.people>30)?5:0;
+  const pp=(e.people<15||e.people>30)?5:0;
   const tp=Math.ceil(Math.max(0,num(e.secs))/30);
   const lp=g.late?2:0;
   const ded=pp+tp+lp;
@@ -453,7 +453,7 @@ function rScore(){
   }
   h+=`<tr class="sub"><td>JUDGING SUBTOTAL</td>${G.map(g=>`<td id="sub-${g.id}"></td>`).join("")}</tr></tbody></table></div>
   <h2>Mechanics, Deductions &amp; Monitoring</h2><div class="wrap"><table><thead><tr><th>MECHANICS</th>${G.map(g=>`<th>${esc(g.name)}</th>`).join("")}</tr></thead><tbody>
-  <tr><td><b>Number of performers</b><p>Minimum 20, maximum 30. 5-point deduction if outside the range.</p></td>${G.map(g=>`<td><input type="number" min="1" value="${ev(g.id,judge).people}" oninput="setF('${g.id}','people',num(this.value))"></td>`).join("")}</tr>
+  <tr><td><b>Number of performers</b><p>Minimum 15, maximum 30. 5-point deduction if outside the range.</p></td>${G.map(g=>`<td><input type="number" min="1" value="${ev(g.id,judge).people}" oninput="setF('${g.id}','people',num(this.value))"></td>`).join("")}</tr>
   <tr><td><b>Presentation time exceeded (seconds)</b><p>1 point per 30 seconds or fraction beyond 5 minutes.</p></td>${G.map(g=>`<td><input type="number" min="0" value="${ev(g.id,judge).secs}" oninput="setF('${g.id}','secs',num(this.value))"></td>`).join("")}</tr>
   <tr><td><b>HR late-submission deduction</b><p>2 points (one-time per group) for late final music and/or backdrop. Set by HR.</p></td>${G.map(g=>`<td><span class="${g.late?"pen":"okc"}">${g.late?"−2 points":"0 points"}</span>${g.verified?"<small>🔒 HR verified</small>":""}</td>`).join("")}</tr>
   <tr><td><b>Safety violation</b><p>Fireworks, pyrotechnics, open flames or fire hazards. For Organizing Committee decision.</p></td>${G.map(g=>`<td><label><input type="checkbox" ${ev(g.id,judge).safety?"checked":""} onchange="setF('${g.id}','safety',this.checked)"> Flag</label></td>`).join("")}</tr>
