@@ -1,0 +1,12 @@
+{
+  "name": "christmas-presentation-2026",
+  "version": "1.0.0",
+  "description": "MHC Christmas Presentation 2026 - Filipino Festival Judges Scoring System",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["mhc", "scoring", "christmas", "festival"],
+  "author": "MHC",
+  "license": "ISC"
+}
