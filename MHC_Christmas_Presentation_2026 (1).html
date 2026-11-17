@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MHC Christmas Presentation 2026 | Judges' Scoring</title>
+<style>
+:root{--g:#173b32;--g2:#1f5244;--gold:#c9a24a;--bg:#f4f6f3;--card:#fff;--tx:#1d2b27;--mu:#6b7a74;--bd:#d9e0dc;--red:#b3261e;--ok:#1b7a4b}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--tx);font-size:14px}
+header{background:var(--g);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.mark{background:var(--gold);color:var(--g);font-weight:800;border-radius:8px;padding:6px 10px}
+header b{display:block;font-size:16px}header small{opacity:.8;letter-spacing:.08em}
+nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+nav button{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35);padding:7px 14px;border-radius:6px;cursor:pointer;font-size:14px}
+nav button.on{background:var(--gold);color:var(--g);border-color:var(--gold);font-weight:700}
+main{padding:20px;max-width:1300px;margin:auto}
+h1{font-size:20px;margin:0 0 4px}h2{font-size:16px;margin:22px 0 8px}
+.mu{color:var(--mu)}
+.bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:12px 0}
+select,input,textarea{font:inherit;padding:7px 8px;border:1px solid var(--bd);border-radius:6px;background:#fff}
+input[type=number]{width:72px;text-align:center}
+textarea{width:100%;min-height:54px;resize:vertical}
+.wrap{overflow-x:auto;background:var(--card);border:1px solid var(--bd);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:900px}
+th,td{padding:9px 10px;border-bottom:1px solid var(--bd);vertical-align:top;text-align:center}
+th{background:var(--g);color:#fff;font-size:13px}
+th:first-child,td:first-child{text-align:left;width:34%}
+td small,td p{display:block;color:var(--mu);font-size:12px;margin:3px 0 0;font-weight:400}
+tr.sub td,tr.fin td{background:#eef3ef;font-weight:700}
+tr.fin td{background:var(--g2);color:#fff}tr.fin small{color:#e7d9a8}
+.pen{color:var(--red);font-weight:700}.okc{color:var(--ok);font-weight:700}
+button.p,button.s{padding:8px 14px;border-radius:6px;cursor:pointer;font:inherit;font-weight:600;border:1px solid var(--g)}
+button.p{background:var(--g);color:#fff}button.s{background:#fff;color:var(--g)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.panel{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:16px}
+.warn{background:#fff6e0;border:1px solid #ecd48a;padding:10px 12px;border-radius:8px;margin:12px 0}
+.hg{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:10px 0;border-bottom:1px solid var(--bd)}
+.hg input[type=text]{min-width:240px}
+.tag{font-size:12px;padding:2px 8px;border-radius:10px;background:#e4ece7}
+.tag.sub{background:#d8f0e1;color:var(--ok)}
+.toast{position:fixed;bottom:18px;right:18px;background:var(--g);color:#fff;padding:10px 16px;border-radius:8px;opacity:0;transition:.3s;pointer-events:none}
+.toast.show{opacity:1}
+footer{text-align:center;color:var(--mu);padding:24px;font-size:12px}
+@media print{header nav,.bar,.row button{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="mark">MHC</div>
+  <div><b>Christmas Presentation 2026</b><small>FILIPINO FESTIVAL • JUDGES' SCORING</small></div>
+  <nav id="nav"></nav>
+</header>
+<main id="main"></main>
+<footer>May Harvest Corporation • Christmas Presentation 2026 • Filipino Festival</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const CRITERIA=[
+{k:"theme",n:"1. Theme Relevance and Filipino Cultural Representation",m:20,d:"Effective portrayal of Filipino festivals, traditions, customs, and cultural identity. Authenticity, relevance, and consistency with the theme."},
+{k:"creativity",n:"2. Creativity and Originality",m:15,d:"Uniqueness of concept, storyline, choreography, props, formations, and creative interpretation of the theme."},
+{k:"performance",n:"3. Performance and Entertainment Value",m:20,d:"Energy, enthusiasm, stage presence, confidence, audience engagement, and entertainment value."},
+{k:"choreo",n:"4. Choreography and Synchronization",m:20,d:"Coordination, timing, dance execution, formations, transitions, rhythm, and synchronization."},
+{k:"costume",n:"5. Costume, Props, and Visual Presentation",m:10,d:"Appropriateness, creativity, cultural relevance, and visual impact of costumes and props."},
+{k:"music",n:"6. Backdrop and Music",m:5,d:"Quality, relevance, creativity, and synchronization of the backdrop and music with the presentation."},
+{k:"teamwork",n:"7. Teamwork and Participation",m:5,d:"Cooperation, unity, coordination, and active participation of all performers."},
+{k:"impact",n:"8. Overall Impact",m:5,d:"Memorability, audience appeal, overall impression, and ability to capture the festive spirit."}];
+const KEY="mhc_xmas_2026_v1";
+const uid=()=>Math.random().toString(36).slice(2,9);
+const fresh=()=>({groups:[1,2,3,4,5].map(i=>({id:"g"+i,name:"Group "+i,late:false,verified:false})),
+  judges:[1,2,3,4,5].map(i=>({id:"j"+i,name:"Judge "+i})),evals:{}});
+let S;try{S=JSON.parse(localStorage.getItem(KEY))||fresh()}catch(e){S=fresh()}
+let page="score",judge=S.judges[0]?.id||"";
+const $=s=>document.querySelector(s);
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const num=v=>Number(v)||0, f2=n=>num(n).toFixed(2);
+function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),1800)}
+function ev(g,j){const k=g+":"+j;return S.evals[k]||(S.evals[k]={scores:{},people:20,secs:0,safety:false,attire:false,comments:"",submitted:false})}
+function calc(e,g){
+  const sub=CRITERIA.reduce((n,c)=>n+Math.min(c.m,Math.max(0,num(e.scores[c.k]))),0);
+  const pp=(e.people<20||e.people>30)?5:0;
+  const tp=Math.ceil(Math.max(0,num(e.secs))/30);
+  const lp=g.late?2:0;
+  const ded=pp+tp+lp;
+  return{sub,pp,tp,lp,ded,fin:Math.max(0,sub-ded)};
+}
+function ranking(){
+  return S.groups.map(g=>{
+    const rows=S.judges.map(j=>S.evals[g.id+":"+j.id]).filter(e=>e&&e.submitted);
+    const avg=f=>rows.length?rows.reduce((a,e)=>a+f(e),0)/rows.length:0;
+    return{g,n:rows.length,avg:avg(e=>calc(e,g).fin),theme:avg(e=>num(e.scores.theme)),perf:avg(e=>num(e.scores.performance)),
+      safety:rows.filter(e=>e.safety).length,attire:rows.filter(e=>e.attire).length};
+  }).sort((a,b)=>b.avg-a.avg||b.theme-a.theme||b.perf-a.perf);
+}
+function nav(){
+  const items=[["score","Scoring"],["results","Results"],["hr","HR Setup"]];
+  $("#nav").innerHTML=items.map(([k,t])=>`<button class="${page===k?"on":""}" onclick="go('${k}')">${t}</button>`).join("");
+}
+function go(p){page=p;render()}
+function render(){nav();({score:rScore,results:rResults,hr:rHR})[page]()}
+
+function rScore(){
+  const G=S.groups;
+  let h=`<h1>Scoring matrix</h1><p class="mu">Score all groups in one view. Entries are saved automatically on this device; press "Submit" per group when done.</p>
+  <div class="bar"><label>Judge: <select onchange="judge=this.value;rScore()">${S.judges.map(j=>`<option value="${j.id}" ${j.id===judge?"selected":""}>${esc(j.name)}</option>`).join("")}</select></label></div>`;
+  if(!judge){$("#main").innerHTML=h+`<div class="warn">Add at least one judge in HR Setup.</div>`;return}
+  h+=`<div class="wrap"><table><thead><tr><th>CRITERIA</th>${G.map(g=>`<th>${esc(g.name)}</th>`).join("")}</tr></thead><tbody>`;
+  for(const c of CRITERIA){
+    h+=`<tr><td><b>${c.n}</b><small>Maximum: ${c.m} points</small><p>${c.d}</p></td>`+
+    G.map(g=>`<td><input type="number" min="0" max="${c.m}" step="1" value="${ev(g.id,judge).scores[c.k]??""}" oninput="setScore('${g.id}','${c.k}',this,${c.m})"> <small>/ ${c.m}</small></td>`).join("")+`</tr>`;
+  }
+  h+=`<tr class="sub"><td>JUDGING SUBTOTAL</td>${G.map(g=>`<td id="sub-${g.id}"></td>`).join("")}</tr></tbody></table></div>
+  <h2>Mechanics, deductions &amp; monitoring</h2><div class="wrap"><table><thead><tr><th>MECHANICS</th>${G.map(g=>`<th>${esc(g.name)}</th>`).join("")}</tr></thead><tbody>
+  <tr><td><b>Number of performers</b><p>Minimum 20, maximum 30. 5-point deduction if outside the range.</p></td>${G.map(g=>`<td><input type="number" min="1" value="${ev(g.id,judge).people}" oninput="setF('${g.id}','people',num(this.value))"></td>`).join("")}</tr>
+  <tr><td><b>Presentation time exceeded (seconds)</b><p>1 point per 30 seconds or fraction beyond 5 minutes.</p></td>${G.map(g=>`<td><input type="number" min="0" value="${ev(g.id,judge).secs}" oninput="setF('${g.id}','secs',num(this.value))"></td>`).join("")}</tr>
+  <tr><td><b>HR late-submission deduction</b><p>2 points (one-time per group) for late final music and/or backdrop. Set by HR.</p></td>${G.map(g=>`<td><span class="${g.late?"pen":"okc"}">${g.late?"−2 points":"0 points"}</span>${g.verified?"<small>🔒 HR verified</small>":""}</td>`).join("")}</tr>
+  <tr><td><b>Safety violation</b><p>Fireworks, pyrotechnics, open flames or fire hazards. For Organizing Committee decision.</p></td>${G.map(g=>`<td><label><input type="checkbox" ${ev(g.id,judge).safety?"checked":""} onchange="setF('${g.id}','safety',this.checked)"> Flag</label></td>`).join("")}</tr>
+  <tr><td><b>Attire / decorum concern</b><p>Inappropriate attire, exposure, wardrobe malfunction or content. For committee review.</p></td>${G.map(g=>`<td><label><input type="checkbox" ${ev(g.id,judge).attire?"checked":""} onchange="setF('${g.id}','attire',this.checked)"> Flag</label></td>`).join("")}</tr>
+  <tr><td><b>Judge comments</b></td>${G.map(g=>`<td><textarea placeholder="Comments…" oninput="setF('${g.id}','comments',this.value)">${esc(ev(g.id,judge).comments)}</textarea></td>`).join("")}</tr>
+  <tr class="fin"><td>FINAL SCORE<small>After all applicable deductions</small></td>${G.map(g=>`<td><span id="fin-${g.id}"></span><small id="ded-${g.id}"></small></td>`).join("")}</tr>
+  <tr><td><b>Status</b></td>${G.map(g=>`<td><span class="tag ${ev(g.id,judge).submitted?"sub":""}" id="st-${g.id}"></span><div class="row" style="justify-content:center"><button class="p" onclick="submitEv('${g.id}')">Submit</button></div></td>`).join("")}</tr>
+  </tbody></table></div>`;
+  $("#main").innerHTML=h;G.forEach(g=>refresh(g.id));
+}
+function refresh(gid){
+  const g=S.groups.find(x=>x.id===gid),e=ev(gid,judge),c=calc(e,g);
+  $("#sub-"+gid).textContent=c.sub+" / 100";
+  $("#fin-"+gid).textContent=f2(c.fin);
+  $("#ded-"+gid).textContent="Deductions: "+c.ded;
+  const st=$("#st-"+gid);st.textContent=e.submitted?"Submitted":"Draft";st.className="tag "+(e.submitted?"sub":"");
+}
+function setScore(gid,k,el,max){
+  let v=el.value===""?"":num(el.value);
+  if(v!==""&&(v<0||v>max)){toast("Max for this criterion is "+max);v=Math.min(max,Math.max(0,v));el.value=v}
+  const e=ev(gid,judge);e.scores[k]=v;e.submitted=false;save();refresh(gid);
+}
+function setF(gid,k,v){const e=ev(gid,judge);e[k]=v;e.submitted=false;save();refresh(gid)}
+function submitEv(gid){
+  const e=ev(gid,judge),g=S.groups.find(x=>x.id===gid);
+  if(CRITERIA.some(c=>e.scores[c.k]===undefined||e.scores[c.k]==="")){toast("Please fill in all 8 criteria first");return}
+  e.submitted=true;save();refresh(gid);toast("Submitted: "+g.name);
+}
+
+function rResults(){
+  const R=ranking();
+  const tie=R.some((r,i)=>i&&r.n&&R[i-1].n&&Math.abs(r.avg-R[i-1].avg)<1e-9);
+  $("#main").innerHTML=`<h1>Results &amp; ranking</h1><p class="mu">Average of submitted final scores across judges. Unsubmitted evaluations are excluded.</p>
+  <div class="panel"><div class="wrap"><table style="min-width:640px"><thead><tr><th>Rank</th><th>Group</th><th>Judges submitted</th><th>Average final score</th><th>Avg Theme</th><th>Avg Performance</th><th>Flags (Safety / Attire)</th></tr></thead><tbody>
+  ${R.map((r,i)=>`<tr><td><b>${i+1}</b></td><td>${esc(r.g.name)}</td><td>${r.n} / ${S.judges.length}</td><td><b>${r.n?f2(r.avg):"Pending"}</b></td><td>${r.n?f2(r.theme):"—"}</td><td>${r.n?f2(r.perf):"—"}</td><td>${r.safety} / ${r.attire}</td></tr>`).join("")}</tbody></table></div>
+  <div class="warn">Tie-breaker: higher average Theme Relevance score; if still tied, higher average Performance and Entertainment Value. Safety and attire flags are referred to the Organizing Committee (no automatic point deduction).${tie?"<br><b>⚠ There is a tie in average score — tie-breakers were applied to the order above.</b>":""}</div>
+  <div class="row"><button class="p" onclick="exportCSV()">Download results (CSV / Excel)</button><button class="s" onclick="window.print()">Print</button></div></div>`;
+}
+function exportCSV(){
+  const q=v=>'"'+String(v??"").replace(/"/g,'""')+'"';
+  const R=ranking();
+  let out=[["Rank","Group","Judges Submitted","Average Final Score","Avg Theme","Avg Performance","HR Late Deduction","HR Verified"].map(q).join(",")];
+  R.forEach((r,i)=>out.push([i+1,r.g.name,r.n,f2(r.avg),f2(r.theme),f2(r.perf),r.g.late?2:0,r.g.verified?"Yes":"No"].map(q).join(",")));
+  out.push("");
+  out.push(["Group","Judge",...CRITERIA.map(c=>c.n),"Subtotal","Participants","Participant Deduction","Seconds Over","Time Deduction","HR Late Deduction","Total Deductions","Final Score","Safety Flag","Attire Flag","Comments"].map(q).join(","));
+  for(const g of S.groups)for(const j of S.judges){
+    const e=S.evals[g.id+":"+j.id];if(!e||!e.submitted)continue;const c=calc(e,g);
+    out.push([g.name,j.name,...CRITERIA.map(k=>num(e.scores[k.k])),c.sub,e.people,c.pp,e.secs,c.tp,c.lp,c.ded,c.fin,e.safety?"YES":"NO",e.attire?"YES":"NO",e.comments].map(q).join(","));
+  }
+  dl("MHC_Christmas_Presentation_2026_Results.csv","\ufeff"+out.join("\r\n"),"text/csv");
+}
+function dl(name,text,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
+
+function rHR(){
+  $("#main").innerHTML=`<h1>HR setup</h1><p class="mu">Group names, judges, late-submission records, and backup. Deadline for final music/backdrop: <b>December 11, 2026, 4:00 PM</b>.</p>
+  <div class="panel"><h2 style="margin-top:0">Participating groups</h2>
+  ${S.groups.map(g=>`<div class="hg"><input type="text" value="${esc(g.name)}" onchange="grp('${g.id}','name',this.value.trim()||'${esc(g.name)}')">
+    <label><input type="checkbox" ${g.late?"checked":""} ${g.verified?"disabled":""} onchange="grp('${g.id}','late',this.checked)"> Late music and/or backdrop (−2 points)</label>
+    <span class="tag ${g.verified?"sub":""}">${g.verified?"Verified &amp; locked":"Not verified"}</span>
+    ${g.verified?`<button class="s" onclick="grp('${g.id}','verified',false)">Unlock</button>`:`<button class="p" onclick="grp('${g.id}','verified',true)">Verify &amp; lock</button>`}</div>`).join("")}
+  <h2>Judges</h2><p class="mu">One name per line.</p>
+  <textarea id="jl" style="min-height:110px">${S.judges.map(j=>esc(j.name)).join("\n")}</textarea>
+  <div class="row"><button class="p" onclick="saveJudges()">Save judges</button></div>
+  <h2>Backup &amp; reset</h2><p class="mu">Data lives only in this browser on this device. Download a backup before and after the event.</p>
+  <div class="row"><button class="s" onclick="dl('MHC_backup.json',JSON.stringify(S),'application/json')">Download backup (.json)</button>
+  <label class="s" style="padding:8px 14px;border:1px solid var(--g);border-radius:6px;cursor:pointer;font-weight:600;color:var(--g)">Restore backup<input type="file" accept=".json" hidden onchange="restore(this.files[0])"></label>
+  <button class="s" style="color:var(--red);border-color:var(--red)" onclick="resetAll()">Reset all data</button></div></div>`;
+}
+function grp(id,k,v){S.groups.find(g=>g.id===id)[k]=v;save();rHR();toast("Saved")}
+function saveJudges(){
+  const names=$("#jl").value.split("\n").map(s=>s.trim()).filter(Boolean);
+  const old=S.judges;
+  S.judges=names.map((n,i)=>({id:old[i]?.id||"j"+uid(),name:n}));
+  if(!S.judges.some(j=>j.id===judge))judge=S.judges[0]?.id||"";
+  save();rHR();toast("Judges saved");
+}
+function restore(file){
+  if(!file)return;const r=new FileReader();
+  r.onload=()=>{try{const d=JSON.parse(r.result);if(!d.groups||!d.judges||!d.evals)throw 0;S=d;judge=S.judges[0]?.id||"";save();rHR();toast("Backup restored")}catch(e){toast("Invalid backup file")}};
+  r.readAsText(file);
+}
+function resetAll(){if(confirm("Delete ALL groups, judges and scores on this device?")){S=fresh();judge=S.judges[0].id;save();render()}}
+render();
+</script>
+</body>
+</html>
