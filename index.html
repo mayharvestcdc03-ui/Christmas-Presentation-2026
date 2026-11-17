@@ -11,14 +11,15 @@
   --g2:#185343;
   --gold:#d4af37;
   --gold-bright:#ffc837;
+  --gold-glow:#ffe57f;
   --fiesta-red:#c82333;
   --fiesta-blue:#1e5bb8;
   --fiesta-yellow:#ffbb00;
   --bg:#f4f6f3;
-  --card:rgba(255, 255, 255, 0.96);
+  --card:rgba(255, 255, 255, 0.95);
   --tx:#162420;
-  --mu:#586963;
-  --bd:#d2ded7;
+  --mu:#53635d;
+  --bd:#cfded6;
   --red:#b3261e;
   --ok:#1b7a4b;
 }
@@ -29,8 +30,8 @@ body{
   color:var(--tx);
   font-size:14px;
   min-height:100vh;
-  background-color:#143328;
-  background-image:linear-gradient(rgba(244, 247, 245, 0.87), rgba(240, 245, 242, 0.92)), url('/assets/fiesta-bg.jpg');
+  background-color:#123226;
+  background-image:linear-gradient(rgba(244, 247, 245, 0.80), rgba(235, 242, 238, 0.86)), url('/assets/fiesta-bg.jpg');
   background-size:cover;
   background-position:center top;
   background-attachment:fixed;
@@ -38,16 +39,17 @@ body{
 
 /* Header & Fiesta Banner */
 header{
-  background:linear-gradient(135deg, #0e3025 0%, #174d3d 60%, #1e5c4a 100%);
+  background:linear-gradient(135deg, #09261d 0%, #114234 50%, #175442 100%);
   color:#fff;
   padding:12px 24px;
   display:flex;
   align-items:center;
   gap:16px;
   flex-wrap:wrap;
-  box-shadow:0 4px 15px rgba(0,0,0,0.25);
+  box-shadow:0 6px 20px rgba(0,0,0,0.3);
   position:relative;
   z-index:20;
+  border-bottom:2.5px solid #d4af37;
 }
 .brand-wrap{
   display:flex;
@@ -55,30 +57,31 @@ header{
   gap:14px;
 }
 .brand-logo{
-  width:46px;
-  height:46px;
+  width:48px;
+  height:48px;
   object-fit:contain;
-  filter:drop-shadow(0 3px 6px rgba(0,0,0,0.35));
-  transition:transform 0.3s ease;
+  filter:drop-shadow(0 4px 8px rgba(0,0,0,0.45));
+  transition:transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .brand-logo:hover{
-  transform:scale(1.08) rotate(4deg);
+  transform:scale(1.1) rotate(5deg);
 }
 .brand-titles b{
   display:block;
-  font-size:17px;
+  font-size:17.5px;
   letter-spacing:0.02em;
   color:#fff;
-  text-shadow:0 1px 2px rgba(0,0,0,0.4);
+  text-shadow:0 1px 3px rgba(0,0,0,0.6);
 }
 .brand-titles small{
   display:inline-block;
-  background:linear-gradient(90deg, #ffc837, #ffe279);
+  background:linear-gradient(90deg, #ffc837, #ffe279, #ffc837);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   font-weight:800;
-  letter-spacing:0.1em;
-  font-size:11px;
+  letter-spacing:0.12em;
+  font-size:11.5px;
+  text-shadow:0 0 12px rgba(255,200,55,0.4);
 }
 .header-meta{
   display:flex;
@@ -88,25 +91,27 @@ header{
   flex-wrap:wrap;
 }
 .sync-badge{
-  background:rgba(255,255,255,0.15);
-  backdrop-filter:blur(4px);
-  padding:5px 12px;
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(6px);
+  padding:5px 14px;
   border-radius:20px;
   font-size:12px;
-  font-weight:600;
+  font-weight:700;
   display:flex;
   align-items:center;
   gap:6px;
-  border:1px solid rgba(255,255,255,0.2);
+  border:1px solid rgba(255,255,255,0.25);
+  box-shadow:0 2px 6px rgba(0,0,0,0.15);
 }
 .clock-badge{
   font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
   font-size:12.5px;
-  background:rgba(0,0,0,0.35);
+  background:rgba(0,0,0,0.45);
   padding:5px 12px;
   border-radius:6px;
-  border:1px solid rgba(255,255,255,0.18);
+  border:1px solid rgba(255,255,255,0.2);
   color:#f4f6f3;
+  letter-spacing:0.04em;
 }
 nav{
   display:flex;
@@ -114,41 +119,52 @@ nav{
   flex-wrap:wrap;
 }
 nav button{
-  background:rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.12);
   color:#fff;
-  border:1px solid rgba(255,255,255,.3);
-  padding:7px 15px;
+  border:1px solid rgba(255,255,255,.35);
+  padding:7px 16px;
   border-radius:8px;
   cursor:pointer;
   font-size:13.5px;
   font-weight:600;
-  transition:all 0.2s;
+  transition:all 0.25s;
 }
 nav button:hover{
-  background:rgba(255,255,255,0.2);
-  border-color:var(--gold);
+  background:rgba(255,255,255,0.25);
+  border-color:var(--gold-bright);
+  transform:translateY(-1px);
 }
 nav button.on{
   background:linear-gradient(135deg, #ffc837 0%, #e0a51f 100%);
   color:#0f382c;
   border-color:#ffc837;
   font-weight:800;
-  box-shadow:0 2px 8px rgba(224,165,31,0.4);
+  box-shadow:0 4px 12px rgba(224,165,31,0.45);
+  transform:translateY(-1px);
 }
 
-/* Hanging Banderitas Banner */
+/* Hanging Banderitas Banner (Enlarged & Multi-tiered) */
 .banderitas-bar{
   width:100%;
-  height:18px;
-  background:repeat-x left top;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 20' preserveAspectRatio='none'%3E%3Cpath d='M0,0 Q15,4 30,0 L15,18 Z' fill='%23e63946'/%3E%3Cpath d='M30,0 Q45,4 60,0 L45,18 Z' fill='%23ffb703'/%3E%3Cpath d='M60,0 Q75,4 90,0 L75,18 Z' fill='%232a9d8f'/%3E%3Cpath d='M90,0 Q105,4 120,0 L105,18 Z' fill='%233a86ff'/%3E%3C/svg%3E");
-  background-size:100px 18px;
-  box-shadow:0 3px 6px rgba(0,0,0,0.12);
-  margin-bottom:8px;
+  height:58px;
+  background-image:url('/assets/banderitas.svg');
+  background-repeat:repeat-x;
+  background-position:top center;
+  background-size:400px 58px;
+  filter:drop-shadow(0 6px 10px rgba(0,0,0,0.25));
+  margin-top:-2px;
+  position:relative;
+  z-index:15;
+  pointer-events:none;
+  animation:banderitasSway 4s ease-in-out infinite alternate;
+}
+@keyframes banderitasSway{
+  0%{ transform:translateY(0); }
+  100%{ transform:translateY(1.5px); }
 }
 
 main{
-  padding:16px 20px 40px;
+  padding:16px 20px 45px;
   max-width:1340px;
   margin:auto;
 }
@@ -157,6 +173,9 @@ h1{
   margin:0 0 4px;
   color:#0f382c;
   font-weight:800;
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
 h2{
   font-size:16px;
@@ -171,12 +190,12 @@ h2{
   align-items:center;
   flex-wrap:wrap;
   margin:12px 0;
-  background:rgba(255,255,255,0.85);
-  backdrop-filter:blur(6px);
-  padding:10px 16px;
-  border-radius:10px;
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:blur(8px);
+  padding:11px 18px;
+  border-radius:12px;
   border:1px solid var(--bd);
-  box-shadow:0 2px 6px rgba(0,0,0,0.04);
+  box-shadow:0 3px 12px rgba(0,0,0,0.05);
 }
 select,input,textarea{
   font:inherit;
@@ -189,7 +208,7 @@ select,input,textarea{
 select:focus,input:focus,textarea:focus{
   outline:none;
   border-color:#1e5c4a;
-  box-shadow:0 0 0 3px rgba(30,92,74,0.15);
+  box-shadow:0 0 0 3px rgba(30,92,74,0.18);
 }
 input[type=number]{
   width:78px;
@@ -201,57 +220,61 @@ textarea{width:100%;min-height:56px;resize:vertical}
 .wrap{
   overflow-x:auto;
   background:var(--card);
+  backdrop-filter:blur(8px);
   border:1px solid var(--bd);
+  border-top:3.5px solid #d4af37;
   border-radius:12px;
-  box-shadow:0 4px 18px rgba(0,0,0,0.07);
+  box-shadow:0 6px 22px rgba(0,0,0,0.08);
 }
 table{border-collapse:collapse;width:100%;min-width:920px}
 th,td{padding:10px 12px;border-bottom:1px solid var(--bd);vertical-align:top;text-align:center}
-th{background:linear-gradient(135deg, #0e3025, #174d3d);color:#fff;font-size:13px;letter-spacing:0.02em}
+th{background:linear-gradient(135deg, #09261d 0%, #114234 100%);color:#fff;font-size:13px;letter-spacing:0.02em}
 th:first-child,td:first-child{text-align:left;width:34%}
 td small,td p{display:block;color:var(--mu);font-size:12px;margin:3px 0 0;font-weight:400}
-tr.sub td,tr.fin td{background:#f0f5f2;font-weight:700}
+tr.sub td,tr.fin td{background:#edf4f0;font-weight:700}
 tr.fin td{
-  background:linear-gradient(135deg, #174d3d, #0f382c);
+  background:linear-gradient(135deg, #175442, #0f382c);
   color:#fff;
 }
 tr.fin small{color:#ffde73}
 .pen{color:var(--red);font-weight:700}.okc{color:var(--ok);font-weight:700}
 button.p,button.s{
-  padding:9px 16px;
+  padding:9px 18px;
   border-radius:8px;
   cursor:pointer;
   font:inherit;
-  font-weight:600;
+  font-weight:700;
   border:1px solid var(--g);
   transition:all 0.2s ease;
 }
 button.p{
-  background:linear-gradient(135deg, #174d3d 0%, #0e3025 100%);
+  background:linear-gradient(135deg, #175442 0%, #0c3327 100%);
   color:#fff;
-  border-color:#0e3025;
-  box-shadow:0 2px 6px rgba(14,48,37,0.3);
+  border-color:#09261d;
+  box-shadow:0 2px 8px rgba(12,51,39,0.35);
 }
 button.p:hover{
-  background:linear-gradient(135deg, #1f634f 0%, #134233 100%);
+  background:linear-gradient(135deg, #206d57 0%, #114234 100%);
   transform:translateY(-1px);
-  box-shadow:0 4px 10px rgba(14,48,37,0.4);
+  box-shadow:0 5px 12px rgba(12,51,39,0.45);
 }
-button.s{background:#fff;color:var(--g)}
-button.s:hover{background:#edf4f0;border-color:#174d3d}
+button.s{background:#fff;color:var(--g);border-color:#bad1c7}
+button.s:hover{background:#edf4f0;border-color:#175442;transform:translateY(-1px)}
 button:disabled{opacity:.5;cursor:not-allowed}
 .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;align-items:center}
 .panel{
   background:var(--card);
   backdrop-filter:blur(8px);
   border:1px solid var(--bd);
+  border-top:3.5px solid #d4af37;
   border-radius:12px;
-  padding:20px;
-  box-shadow:0 4px 20px rgba(0,0,0,0.07);
+  padding:22px;
+  box-shadow:0 6px 24px rgba(0,0,0,0.08);
 }
 .warn{
   background:#fffbe8;
   border:1px solid #fae292;
+  border-left:4px solid #f39c12;
   padding:12px 16px;
   border-radius:10px;
   margin:14px 0;
@@ -272,25 +295,59 @@ button:disabled{opacity:.5;cursor:not-allowed}
   position:fixed;
   bottom:20px;
   right:20px;
-  background:linear-gradient(135deg, #0e3025, #174d3d);
+  background:linear-gradient(135deg, #09261d, #175442);
   color:#fff;
-  padding:12px 20px;
+  padding:12px 22px;
   border-radius:10px;
   opacity:0;
   transition:opacity 0.3s, transform 0.3s;
   pointer-events:none;
   z-index:9999;
-  box-shadow:0 6px 20px rgba(0,0,0,0.3);
+  box-shadow:0 6px 22px rgba(0,0,0,0.35);
   font-weight:600;
   transform:translateY(8px);
+  border:1px solid rgba(255,200,55,0.4);
 }
 .toast.show{opacity:1;transform:translateY(0)}
+
+/* Rank Badges */
+.rank-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:4px 10px;
+  border-radius:20px;
+  font-size:12.5px;
+  font-weight:800;
+  background:#edf4f0;
+  color:#1b5040;
+}
+.rank-badge.rank-1{
+  background:linear-gradient(135deg, #fff3b0 0%, #ffd54f 100%);
+  color:#704800;
+  border:1px solid #ffca28;
+  box-shadow:0 2px 8px rgba(255,193,7,0.35);
+}
+.rank-badge.rank-2{
+  background:linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+  color:#2c3e50;
+  border:1px solid #ced4da;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+.rank-badge.rank-3{
+  background:linear-gradient(135deg, #ffe0cc 0%, #ffccaa 100%);
+  color:#873600;
+  border:1px solid #e59866;
+  box-shadow:0 2px 6px rgba(230,126,34,0.25);
+}
+
 footer{
   text-align:center;
-  color:#4d5f58;
-  padding:28px 16px;
+  color:#374b44;
+  padding:30px 16px;
   font-size:12.5px;
-  font-weight:500;
+  font-weight:600;
+  text-shadow:0 1px 2px rgba(255,255,255,0.6);
 }
 @media print{
   header nav,.header-meta,.bar,.row button,.banderitas-bar{display:none !important}
@@ -306,7 +363,7 @@ footer{
     <img src="/assets/mhc-logo.png" alt="MHC Logo" class="brand-logo" onerror="this.style.display='none'">
     <div class="brand-titles">
       <b>MHC Christmas Presentation 2026</b>
-      <small>FILIPINO FIESTA • JUDGES' SCORING SYSTEM</small>
+      <small>✨ PASKONG PINOY • FILIPINO FIESTA JUDGES' SCORING ✨</small>
     </div>
   </div>
   <div class="header-meta">
@@ -318,7 +375,7 @@ footer{
 <div class="banderitas-bar"></div>
 
 <main id="main"></main>
-<footer>May Harvest Corporation • Christmas Presentation 2026 • Filipino Fiesta Theme</footer>
+<footer>May Harvest Corporation • Christmas Presentation 2026 • Filipino Fiesta Celebration</footer>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -386,7 +443,7 @@ function render(){nav();({score:rScore,results:rResults,hr:rHR})[page]()}
 
 function rScore(){
   const G=S.groups;
-  let h=`<h1>Fiesta Scoring Matrix</h1><p class="mu">Score all groups in one view. Entries are saved automatically on this device and synced live across devices. Click "Submit" per group when done.</p>
+  let h=`<h1>🎉 Fiesta Scoring Matrix</h1><p class="mu">Score all groups in one view. Entries are saved automatically on this device and synced live across devices. Click "Submit" per group when done.</p>
   <div class="bar"><label><b>Select Judge:</b> <select onchange="judge=this.value;rScore()">${S.judges.map(j=>`<option value="${j.id}" ${j.id===judge?"selected":""}>${esc(j.name)}</option>`).join("")}</select></label></div>`;
   if(!judge){$("#main").innerHTML=h+`<div class="warn">Add at least one judge in HR Setup.</div>`;return}
   h+=`<div class="wrap"><table><thead><tr><th>CRITERIA</th>${G.map(g=>`<th>${esc(g.name)}</th>`).join("")}</tr></thead><tbody>`;
@@ -433,11 +490,44 @@ function submitEv(gid){
 function rResults(){
   const R=ranking();
   const tie=R.some((r,i)=>i&&r.n&&R[i-1].n&&Math.abs(r.avg-R[i-1].avg)<1e-9);
-  $("#main").innerHTML=`<h1>Results &amp; Official Ranking</h1><p class="mu">Live aggregate of submitted final scores across all judges. Unsubmitted drafts are excluded.</p>
+  const topGroup=R.find(r=>r.n>0);
+
+  let topBanner="";
+  if(topGroup){
+    topBanner=`<div style="background:linear-gradient(135deg, #114234 0%, #09261d 100%);color:#fff;padding:16px 20px;border-radius:12px;margin-bottom:16px;border:1.5px solid #d4af37;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+      <div>
+        <div style="color:#ffc837;font-size:12px;font-weight:800;letter-spacing:0.08em">🏆 CURRENT LEADER</div>
+        <div style="font-size:20px;font-weight:800;margin-top:2px">${esc(topGroup.g.name)}</div>
+        <div style="font-size:12.5px;opacity:0.85;margin-top:2px">Submitted by ${topGroup.n} of ${S.judges.length} judges</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:11.5px;color:#ffc837;font-weight:700">AVERAGE SCORE</div>
+        <div style="font-size:26px;font-weight:900;color:#fff">${f2(topGroup.avg)} <span style="font-size:14px;opacity:0.8">/ 100</span></div>
+      </div>
+    </div>`;
+  }
+
+  $("#main").innerHTML=`<h1>🏆 Results &amp; Official Ranking</h1><p class="mu">Live aggregate of submitted final scores across all judges. Unsubmitted drafts are excluded.</p>
+  ${topBanner}
   <div class="panel"><div class="wrap"><table style="min-width:640px"><thead><tr><th>Rank</th><th>Group</th><th>Judges Submitted</th><th>Average Final Score</th><th>Avg Theme</th><th>Avg Performance</th><th>Flags (Safety / Attire)</th></tr></thead><tbody>
-  ${R.map((r,i)=>`<tr><td><b>#${i+1}</b></td><td><b>${esc(r.g.name)}</b></td><td>${r.n} / ${S.judges.length}</td><td><b style="color:#0f382c;font-size:15px">${r.n?f2(r.avg):"Pending"}</b></td><td>${r.n?f2(r.theme):"—"}</td><td>${r.n?f2(r.perf):"—"}</td><td>${r.safety} / ${r.attire}</td></tr>`).join("")}</tbody></table></div>
+  ${R.map((r,i)=>{
+    let badgeClass="";
+    let badgeText=`#${i+1}`;
+    if(i===0){ badgeClass="rank-1"; badgeText="🥇 1st Place (Champion)"; }
+    else if(i===1){ badgeClass="rank-2"; badgeText="🥈 2nd Place"; }
+    else if(i===2){ badgeClass="rank-3"; badgeText="🥉 3rd Place"; }
+    return `<tr>
+      <td><span class="rank-badge ${badgeClass}">${badgeText}</span></td>
+      <td><b style="font-size:14.5px">${esc(r.g.name)}</b></td>
+      <td>${r.n} / ${S.judges.length}</td>
+      <td><b style="color:#0f382c;font-size:16px">${r.n?f2(r.avg):"Pending"}</b></td>
+      <td>${r.n?f2(r.theme):"—"}</td>
+      <td>${r.n?f2(r.perf):"—"}</td>
+      <td>${r.safety} / ${r.attire}</td>
+    </tr>`;
+  }).join("")}</tbody></table></div>
   <div class="warn"><b>Tie-breaker rule:</b> Higher average Theme Relevance score; if still tied, higher average Performance &amp; Entertainment Value. Safety and attire flags are referred to the Organizing Committee.${tie?"<br><b>⚠ Tie detected in average score — tie-breakers applied above.</b>":""}</div>
-  <div class="row"><button class="p" onclick="exportCSV()">Download Results (CSV / Excel)</button><button class="s" onclick="window.print()">Print Results</button></div></div>`;
+  <div class="row"><button class="p" onclick="exportCSV()">Download Results (CSV / Excel)</button><button class="s" onclick="window.print()">Print Official Results</button></div></div>`;
 }
 function exportCSV(){
   const q=v=>'"'+String(v??"").replace(/"/g,'""')+'"';
@@ -455,7 +545,7 @@ function exportCSV(){
 function dl(name,text,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
 
 function rHR(){
-  $("#main").innerHTML=`<h1>HR Setup &amp; Mechanics</h1><p class="mu">Configure participating groups, judges, and late submissions. Final submission deadline: <b>December 11, 2026, 4:00 PM</b>.</p>
+  $("#main").innerHTML=`<h1>⚙️ HR Setup &amp; Mechanics</h1><p class="mu">Configure participating groups, judges, and late submissions. Final submission deadline: <b>December 11, 2026, 4:00 PM</b>.</p>
   <div class="panel"><h2 style="margin-top:0">Participating Groups</h2>
   ${S.groups.map(g=>`<div class="hg"><input type="text" value="${esc(g.name)}" onchange="grp('${g.id}','name',this.value.trim()||'${esc(g.name)}')">
     <label><input type="checkbox" ${g.late?"checked":""} ${g.verified?"disabled":""} onchange="grp('${g.id}','late',this.checked)"> Late music and/or backdrop (−2 points)</label>
@@ -490,13 +580,13 @@ function setSyncStatus(status, text){
   if(!el) return;
   if(status==="synced"){
     el.textContent="🟢 "+(text||"Live Synced");
-    el.style.background="rgba(255,255,255,0.18)";
+    el.style.background="rgba(255,255,255,0.2)";
   } else if(status==="syncing"){
     el.textContent="🟡 "+(text||"Syncing...");
-    el.style.background="rgba(255,200,55,0.35)";
+    el.style.background="rgba(255,200,55,0.4)";
   } else {
     el.textContent="🔴 "+(text||"Offline Mode");
-    el.style.background="rgba(179,38,30,0.35)";
+    el.style.background="rgba(179,38,30,0.4)";
   }
 }
 
